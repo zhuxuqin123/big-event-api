@@ -1,0 +1,3 @@
+# 排除node_modules基于git项目管理
+
+node_modules/
