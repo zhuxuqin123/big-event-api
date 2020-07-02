@@ -10,6 +10,8 @@ const jwt = require("express-jwt");
 //统一路由模块
 const loginRouter = require(path.join(__dirname, "./routers/index.js"));
 const userRouter = require(path.join(__dirname, "./routers/user.js"));
+const cateRouter = require(path.join(__dirname, "./routers/cate.js"));
+const articleRouter = require(path.join(__dirname, "./routers/article.js"));
 //2.创建服务器
 const app = express();
 
@@ -23,15 +25,6 @@ app.use(express.json());
 //中间件解决跨域
 app.use(cors());
 
-
-// 通过中间件统一设置token
-// app.use(
-//   jwt({
-//     secret: "bigevent",
-//   }).unless({
-//     path: ["/api/login", "/api/reguser"], //["/api/login", "/api/reguser"] /^\/api/
-//   })
-// );
 app.use(jwt({
   secret: 'bigevent'
 }).unless({
@@ -40,6 +33,15 @@ app.use(jwt({
 //导入路由信息
 app.use("/api", loginRouter);
 app.use("/my", userRouter);
+app.use("/my/article", cateRouter);
+app.use("/my/article", articleRouter);
+//统一处理不存在的路由
+app.all('*', (req, res) => {
+  res.status(404).json({
+    status: 404,
+    message: '请求的资源不存在'
+  })
+})
 //添加一个中间件，统一处理错误信息
 app.use((err, req, res, next) => {
   //token验证失败
