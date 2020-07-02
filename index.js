@@ -40,6 +40,22 @@ app.use(jwt({
 //导入路由信息
 app.use("/api", loginRouter);
 app.use("/my", userRouter);
+//添加一个中间件，统一处理错误信息
+app.use((err, req, res, next) => {
+  //token验证失败
+  if (err.status === 401) {
+    res.status(401).json({
+      status: 401,
+      message: err.message
+    })
+  } else {
+    res.json({
+      status: 500,
+      message: '服务器错误' + err.message
+    })
+  }
+
+})
 //3.开启服务器
 app.listen(3000, () => {
   console.log("running");
