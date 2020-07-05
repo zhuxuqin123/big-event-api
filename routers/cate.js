@@ -27,6 +27,7 @@ router.post('/addcates', async (req, res) => {
     // console.log(params);
     let sql = 'insert into cate set ?'
     let ret = await cn.queryData(sql, params)
+    console.log(ret);
     if (ret && ret.affectedRows > 0) {
         res.json({
             status: 0,

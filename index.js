@@ -14,7 +14,8 @@ const cateRouter = require(path.join(__dirname, "./routers/cate.js"));
 const articleRouter = require(path.join(__dirname, "./routers/article.js"));
 //2.创建服务器
 const app = express();
-
+//使用静态资源路径
+app.use('/uploads', express.static('uploads'))
 //处理post数据格式
 app.use(
   express.urlencoded({

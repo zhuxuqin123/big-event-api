@@ -19,7 +19,6 @@ router.post("/login", async (req, res) => {
   let sql = "select id from user where username = ? and password =?";
   let ret = await db.queryData(sql, [params.username, params.password]);
   console.log(ret);
-
   if (ret && ret.length > 0) {
     //验证通过添加token标志
     let token = jwt.sign({
